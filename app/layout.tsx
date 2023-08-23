@@ -1,6 +1,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Inter } from 'next/font/google';
+import { LogoutButton } from './LogoutButton';
+import { LoginButton } from './LoginButton';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +19,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <header className="flex justify-between p-4">
+          <Link href="/">ホーム</Link>
+
+          <div>
+            <LoginButton />
+            <LogoutButton />
+          </div>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
