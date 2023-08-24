@@ -1,8 +1,9 @@
 import { getServerSession } from 'next-auth/next';
+
 import { authOptions } from '@/lib/auth/authOptions';
 
-import { LogoutButton } from './LogoutButton';
 import { LoginButton } from './LoginButton';
+import { LogoutButton } from './LogoutButton';
 
 export const AuthButtons = async () => {
   const session = await getServerSession(authOptions);
