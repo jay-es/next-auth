@@ -2,8 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Inter } from 'next/font/google';
-import { LogoutButton } from './LogoutButton';
-import { LoginButton } from './LoginButton';
+import { AuthButtons } from './_components/AuthButtons';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,8 +23,7 @@ export default function RootLayout({
           <Link href="/">ホーム</Link>
 
           <div>
-            <LoginButton />
-            <LogoutButton />
+            <AuthButtons />
           </div>
         </header>
         {children}
