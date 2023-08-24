@@ -20,8 +20,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <header className="flex justify-between p-4">
+      <body className={inter.className + ' px-4'}>
+        <header className="flex justify-between py-4">
           <Link href="/">ホーム</Link>
 
           <div>
