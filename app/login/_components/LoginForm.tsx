@@ -20,6 +20,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
+import { moveTo } from '../action';
+
 const formSchema = z.object({
   email: z.string().email({
     message: '正しいメールアドレスを入力してください',
@@ -56,13 +58,12 @@ export const LoginFormInner = () => {
     }
 
     const callbackUrl = searchParams.get('callbackUrl') ?? '/';
-    // router.push などではキャッシュが消えない（ログイン前の表示になってしまう）
-    window.location.replace(callbackUrl);
+    await moveTo(callbackUrl);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form action={() => form.handleSubmit(onSubmit)()} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
