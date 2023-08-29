@@ -14,7 +14,7 @@ export default async function Login() {
   }
 
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center pt-20">
       <Card className=" w-full max-w-xl">
         <CardHeader>
           <CardTitle>ログイン</CardTitle>

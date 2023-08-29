@@ -2,8 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, Loader2 } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
-import { SessionProvider } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -31,7 +30,8 @@ const formSchema = z.object({
   }),
 });
 
-export const LoginFormInner = () => {
+export const LoginForm = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,6 +60,9 @@ export const LoginFormInner = () => {
     const callbackUrl = searchParams.get('callbackUrl') ?? '/';
     await moveTo(callbackUrl);
   }
+
+  const loading =
+    form.formState.isSubmitting || form.formState.isSubmitSuccessful;
 
   return (
     <Form {...form}>
@@ -91,13 +94,23 @@ export const LoginFormInner = () => {
           )}
         />
 
-        {form.formState.isSubmitting || form.formState.isSubmitSuccessful ? (
-          <Button disabled>
-            <Loader2 className="h-4 w-[4em] animate-spin" />
+        <div className="flex gap-x-4">
+          <Button type="submit" className="w-24" disabled={loading}>
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              'ログイン'
+            )}
           </Button>
-        ) : (
-          <Button type="submit">ログイン</Button>
-        )}
+          <Button
+            type="button"
+            variant="outline"
+            disabled={loading}
+            onClick={router.back}
+          >
+            戻る
+          </Button>
+        </div>
 
         {form.formState.errors.root?.message && (
           <Alert variant="destructive">
@@ -111,9 +124,3 @@ export const LoginFormInner = () => {
     </Form>
   );
 };
-
-export const LoginForm = () => (
-  <SessionProvider>
-    <LoginFormInner />
-  </SessionProvider>
-);

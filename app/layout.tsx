@@ -2,9 +2,6 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Link from 'next/link';
-
-import { AuthButtons } from './_components/AuthButtons';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,16 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + ' px-4'}>
-        <header className="flex justify-between py-4">
-          <Link href="/">ホーム</Link>
-
-          <div>
-            <AuthButtons />
-          </div>
-        </header>
-        {children}
-      </body>
+      <body className={inter.className + ' px-4'}>{children}</body>
     </html>
   );
 }
