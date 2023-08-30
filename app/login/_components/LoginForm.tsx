@@ -1,11 +1,11 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { valibotResolver } from '@hookform/resolvers/valibot';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { email, minLength, object, type Output, string } from 'valibot';
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -21,21 +21,17 @@ import { Input } from '@/components/ui/input';
 
 import { moveTo } from '../action';
 
-const formSchema = z.object({
-  email: z.string().email({
-    message: '正しいメールアドレスを入力してください',
-  }),
-  password: z.string().min(6, {
-    message: 'パスワードは6文字以上で入力してください',
-  }),
+const formSchema = object({
+  email: string([email('正しいメールアドレスを入力してください')]),
+  password: string([minLength(6, 'パスワードは6文字以上で入力してください')]),
 });
 
 export const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<Output<typeof formSchema>>({
+    resolver: valibotResolver(formSchema),
     defaultValues: {
       // オートコンプリート後のフォーカスでエラーになるのを防止
       email: '',
@@ -43,7 +39,7 @@ export const LoginForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: Output<typeof formSchema>) {
     const res = await signIn('credentials', {
       redirect: false, // これがないとレスポンスがなく、ログインページに遷移してしまう
       email: values.email,
