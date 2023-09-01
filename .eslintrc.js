@@ -3,6 +3,7 @@ module.exports = {
     'next/core-web-vitals',
     'plugin:@typescript-eslint/strict',
     'plugin:@typescript-eslint/stylistic',
+    '@jay-es/nextjs-no-default-export',
     'prettier',
   ],
   plugins: ['simple-import-sort'],

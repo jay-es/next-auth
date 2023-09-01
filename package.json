@@ -39,6 +39,7 @@
     "valibot": "^0.13.1"
   },
   "devDependencies": {
+    "@jay-es/eslint-config-nextjs-no-default-export": "^0.1.1",
     "@types/bcrypt": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
