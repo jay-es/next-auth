@@ -15,8 +15,20 @@ cp .env.template .env.local
 openssl rand -base64 32
 ```
 
+#### a. Docker を使う場合
+
+```shell
+# 起動
+docker compose up -d
+
+# 終了
+docker compose down
+```
+
+#### b. Vercel Postgres を使う場合
+
 `POSTGRES_URL` などは Vercel 管理画面からコピペ  
-Quickstart > .env.local タブを表示 > Copy Snippet をクリック
+Quickstart > .env.local タブ > Copy Snippet をクリック
 
 ### 2. Prisma 用意
 
@@ -26,7 +38,13 @@ Quickstart > .env.local タブを表示 > Copy Snippet をクリック
 npm run prisma-generate
 ```
 
-ダミーユーザー作成
+DB にスキーマ反映
+
+```shell
+dotenv -e .env.local -- prisma migrate dev --name init
+```
+
+ダミーユーザー作成  
 すでに DB にレコードがある場合は何も起きない
 
 ```shell

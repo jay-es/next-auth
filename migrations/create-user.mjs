@@ -15,6 +15,7 @@ const prisma = new PrismaClient();
 const users = await prisma.user.count();
 
 if (users > 0) {
+  console.log({ users });
   process.exit(0);
 }
 
