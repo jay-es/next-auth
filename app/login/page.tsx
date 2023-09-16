@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
 
@@ -13,6 +14,12 @@ export default async function Login() {
     redirect('/');
   }
 
+  async function redirectTo(callbackUrl: string): Promise<void> {
+    'use server';
+    revalidatePath('/');
+    redirect(callbackUrl);
+  }
+
   return (
     <main className="flex flex-col items-center pt-20">
       <Card className=" w-full max-w-xl">
@@ -20,7 +27,7 @@ export default async function Login() {
           <CardTitle>ログイン</CardTitle>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <LoginForm action={redirectTo} />
         </CardContent>
       </Card>
     </main>

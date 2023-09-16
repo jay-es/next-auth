@@ -19,14 +19,16 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import { moveTo } from '../action';
+type Props = {
+  action: (callbackUrl: string) => Promise<void>;
+};
 
 const formSchema = object({
   email: string([email('正しいメールアドレスを入力してください')]),
   password: string([minLength(6, 'パスワードは6文字以上で入力してください')]),
 });
 
-export const LoginForm = () => {
+export const LoginForm = ({ action }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -54,7 +56,7 @@ export const LoginForm = () => {
     }
 
     const callbackUrl = searchParams.get('callbackUrl') ?? '/';
-    await moveTo(callbackUrl);
+    await action(callbackUrl);
   }
 
   const loading =

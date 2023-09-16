@@ -41,7 +41,7 @@ npm run prisma-generate
 DB にスキーマ反映
 
 ```shell
-dotenv -e .env.local -- prisma migrate dev --name init
+npx dotenv -e .env.local -- prisma migrate dev --name init
 ```
 
 ダミーユーザー作成  
